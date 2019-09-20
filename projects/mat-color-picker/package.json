@@ -1,0 +1,11 @@
+{
+  "name": "@tastybytes/mat-color-picker",
+  "author": "Brian Kelley",
+  "license": "MIT",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^8.2.7",
+    "@angular/core": "^8.2.7",
+    "@angular/material": "^8.2.0"
+  }
+}

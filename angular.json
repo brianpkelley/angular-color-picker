@@ -133,6 +133,41 @@
           }
         }
       }
+    },
+    "mat-color-picker": {
+      "projectType": "library",
+      "root": "projects/mat-color-picker",
+      "sourceRoot": "projects/mat-color-picker/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/mat-color-picker/tsconfig.lib.json",
+            "project": "projects/mat-color-picker/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/mat-color-picker/src/test.ts",
+            "tsConfig": "projects/mat-color-picker/tsconfig.spec.json",
+            "karmaConfig": "projects/mat-color-picker/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/mat-color-picker/tsconfig.lib.json",
+              "projects/mat-color-picker/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "mat-color-picker-app"

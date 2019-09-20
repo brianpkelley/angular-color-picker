@@ -16,6 +16,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "mat-color-picker": [
+        "dist/mat-color-picker"
+      ],
+      "mat-color-picker/*": [
+        "dist/mat-color-picker/*"
+      ]
+    }
   }
 }
