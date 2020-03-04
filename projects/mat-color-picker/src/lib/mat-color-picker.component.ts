@@ -1,19 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {IColor} from './mat-color-picker.types';
 
 @Component({
-  selector: 'lib-mat-color-picker',
-  template: `
-    <p>
-      mat-color-picker works!
-    </p>
-  `,
-  styles: []
+	selector: 'tb-mat-color-picker',
+	template: `
+		<p>
+			mat-color-picker works!
+		</p>
+	`,
+	styles: []
 })
 export class MatColorPickerComponent implements OnInit {
 
-  constructor() { }
+	@Input('value') model: IColor | string;
+	@Output('value') modelChange: EventEmitter<IColor|string>;
 
-  ngOnInit() {
-  }
+	constructor() {
+	}
+
+	ngOnInit() {
+	}
 
 }

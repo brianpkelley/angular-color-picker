@@ -1,0 +1,21 @@
+{
+	"extends": "../projects/mat-color-picker/tsconfig.lib.json",
+	"compilerOptions": {
+		"types": [
+			"node"
+		],
+		"jsx": "react",
+		"allowSyntheticDefaultImports": true
+	},
+	"exclude": [
+		"../src/test.ts",
+		"../src/**/*.spec.ts",
+		"../projects/**/*.spec.ts"
+	],
+	"include": [
+		"../projects/**/*"
+	],
+	"files": [
+		"./typings.d.ts"
+	]
+}

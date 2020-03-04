@@ -1,0 +1,3 @@
+<tb-spectrum-canvas [value]="value" (valueChange)="onValueChange( $event )"></tb-spectrum-canvas>
+<tb-hue-canvas [value]="value" (valueChange)="onValueChange( $event )" [orientation]="sliderOrientation"></tb-hue-canvas>
+<tb-alpha-canvas [value]="value" (valueChange)="onValueChange( $event )" [orientation]="sliderOrientation" *ngIf="showAlpha"></tb-alpha-canvas>

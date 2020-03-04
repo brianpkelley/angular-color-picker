@@ -1,0 +1,3 @@
+<tb-wheel-canvas [value]="value" (valueChange)="onValueChange($event)" markerClass="circle-filled"></tb-wheel-canvas>
+<tb-lightness-canvas [value]="value" (valueChange)="onValueChange($event)" [orientation]="sliderOrientation" markerClass="circle-filled"></tb-lightness-canvas>
+<tb-alpha-canvas [value]="value" (valueChange)="onValueChange( $event )" [orientation]="sliderOrientation" *ngIf="showAlpha"></tb-alpha-canvas>
