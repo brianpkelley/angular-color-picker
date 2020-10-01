@@ -8,7 +8,7 @@ export * from './lib/mat-color-picker.module';
 export * from './lib/mat-color-picker.types';
 export * from './lib/canvas/gradientCanvas.component';
 export * from './lib/canvas/alphaCanvas.component';
-export * from './lib/canvas/hueCanvas.component';
+export * from './lib/canvases/sliders/hueSlider';
 export * from './lib/canvas/lightnessCanvas.component';
 export * from './lib/canvas/spectrumCanvas.component';
 export * from './lib/canvas/wheelCanvas.component';

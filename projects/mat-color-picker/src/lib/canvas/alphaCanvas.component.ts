@@ -12,6 +12,10 @@ export class AlphaCanvasComponent extends SliderCanvas implements DoCheck {
 	public type = 'alpha';
 
 
+	ngOnInit() {
+		super.ngOnInit();
+	}
+
 	ngDoCheck() {
 		super.ngDoCheck();
 		if ( !this.ready ) {
@@ -22,59 +26,15 @@ export class AlphaCanvasComponent extends SliderCanvas implements DoCheck {
 				this.draw();
 			}
 			if (this._value.a !== this._oldValue.a) {
+		console.log( "Alpha DO CHECK", this._value, this._oldValue );
 				this.onColorSet();
+				this.setMarkerColor();
+
 			}
 		}
-		this._oldValue = this._value;
+		this._oldValue = {...this._value};
 	}
 
-	draw() {
-		this.context.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
 
-		// Create gradient
-		var hueGrd;
-		if ( this.isVertical() ) {
-			hueGrd = this.context.createLinearGradient(90, 0, 90, this.height);
-		} else {
-			hueGrd = this.context.createLinearGradient(0, 90, this.width, 90);
-		}
-		var colorRGB = hsv2rgb( this._value );
-
-		// Add colors
-		hueGrd.addColorStop(0,	'rgba(' + colorRGB.r + ',' + colorRGB.g + ',' + colorRGB.b + ', 1.000)');
-		hueGrd.addColorStop(1,	'rgba(' + colorRGB.r + ',' + colorRGB.g + ',' + colorRGB.b + ', 0.000)');
-
-		// Fill with gradient
-		this.context.fillStyle = hueGrd;
-		this.context.fillRect( 0, 0, this.canvas.nativeElement.width, this.height );
-
-		this.canvas.nativeElement.classList.add('checkered');
-		this.setMarkerColor();
-	}
-
-	getColorByPoint( x, y ) {
-		var a = 1 - this.getPercentage( x, y ); // this.height - y ) / this.height;
-
-		this._value.a = a;
-
-		this.valueChange.emit( this._value );
-		this.setMarkerColor();
-	}
-
-	onColorSet( ) {
-		//this.draw();
-		let dim = this.getSliderDimension();
-		let pos = dim - ( dim * this._value.a );
-
-		this.setMarkerCenter( pos, pos );
-	}
-
-	setMarkerColor( ) {
-		this.marker.nativeElement.style.borderColor = brightness( this._value ) > 135 || (this._value.a !== undefined && this._value.a < .5) ? '#000' : '#fff';
-		let rgb = hsv2rgb( this._value );
-
-		this.marker.nativeElement.style.setProperty( '--color','rgba('+rgb.r+','+rgb.g+','+rgb.b+','+ (this._value.a === undefined ? '1' : this._value.a) +')' );
-
-	}
 
 }

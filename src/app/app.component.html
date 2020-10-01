@@ -1,24 +1,80 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-
-<tb-mat-color-picker></tb-mat-color-picker>
-
-<input type="color" [ngModel]="TinyColor( colors[0] ).toHexString()" (ngModelChange)="colors[0] = $event" />
-<input type="text" [ngModel]="TinyColor( colors[0] ).toRgbString()" (ngModelChange)="colors[0] = $event" />
-
-
-<tb-hue-spectrum [(value)]="colors[0]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL"></tb-hue-spectrum>
-<tb-wheel-lightness [(value)]="colors[0]" [showAlpha]="true" [sliderOrientation]="EOrientation.HORIZONTAL"></tb-wheel-lightness>
-
-
-<pre>{{ colors[0] | json}}</pre>
-
-<div style="width: 400px; height: 200px;" class="checkered">
-	<div [ngStyle]="{ backgroundColor: TinyColor( colors[0] ).toRgbString() }" style="height: 100%; width: 100%">
-		<pre>{{ TinyColor( colors[0] ).toRgbString() }}</pre>
+<div style="text-align:center; width: 650px; margin: auto; " class="container">
+	<div style="width: 400px; height: 400px; margin: 0 auto;">
+		<div style="height: 100%; width: 100%" #logoSVG [ngStyle]="{fill: TinyColor( colors[1] ).toRgbString()}">
+		</div>
 	</div>
+	
+	<tb-mat-color-picker></tb-mat-color-picker>
+	
+	<input type="color" [ngModel]="TinyColor( colors[1] ).toHexString()" (ngModelChange)="colors[1] = $event"/>
+	<input type="text" [ngModel]="TinyColor( colors[0] ).toRgbString()" (ngModelChange)="colors[0] = $event"/>
+	
+	<mat-tab-group >
+		<mat-tab label="Hue and Spectrum">
+			<ng-template matTabContent>
+			
+			<div style="padding: 30px;">
+				<tb-hue-spectrum [(value)]="colors[0]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL" [alphaOrientation]="EOrientation.HORIZONTAL"></tb-hue-spectrum>
+			</div>
+			</ng-template>
+		</mat-tab>
+		<mat-tab label="Hue and Spectrum">
+			<ng-template matTabContent>
+				
+				<div style="padding: 30px;">
+					<tb-hue-lightness [(value)]="colors[0]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL" [alphaOrientation]="EOrientation.HORIZONTAL"></tb-hue-lightness>
+				</div>
+			</ng-template>
+		</mat-tab>
+		<mat-tab label="Color Wheel and Lightness">
+			<ng-template matTabContent>
+			
+			<div style="padding: 30px;">
+				<tb-wheel-lightness [(value)]="colors[1]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL" [alphaOrientation]="EOrientation.HORIZONTAL"></tb-wheel-lightness>
+			</div>
+			</ng-template>
+		</mat-tab>
+		<mat-tab label="RGB Sliders">
+			<ng-template matTabContent>
+				<div style="padding: 30px; display: flex; flex-direction: column;">
+					<tb-sliders [(value)]="colors[1]" [sliderOrientation]="EOrientation.HORIZONTAL" components="rgb"></tb-sliders>
+				</div>
+			</ng-template>
+		</mat-tab>
+		
+		<mat-tab label="HSL Sliders">
+			<ng-template matTabContent>
+				<div style="padding: 30px; display: flex; flex-direction: column;">
+					<tb-sliders [(value)]="colors[1]" [sliderOrientation]="EOrientation.HORIZONTAL" components="hsl"></tb-sliders>
+				</div>
+			</ng-template>
+		</mat-tab>
+		
+		<mat-tab label="HSV Sliders">
+			<ng-template matTabContent>
+				<div style="padding: 30px; display: flex; flex-direction: column;">
+					<tb-sliders [(value)]="colors[1]" [sliderOrientation]="EOrientation.HORIZONTAL" components="hsv"></tb-sliders>
+				</div>
+			</ng-template>
+		</mat-tab>
+		
+	</mat-tab-group>
+	
+	<span style="text-align: left;">
+	<pre>{{ colors[ 1 ] | json}}</pre>
+	<pre>{{ TinyColor( colors[ 1 ] ).toHsl() | json}}</pre>
+		</span>
 </div>
+
+<!--&lt;!&ndash;<div style="width: 500px; height: 450px;" class="checkered">&ndash;&gt;-->
+<!--<div style="width: 500px; height: 450px;">-->
+<!--&lt;!&ndash;	<div [ngStyle]="{ backgroundColor: TinyColor( colors[0] ).toRgbString() }" style="height: 100%; width: 100%">&ndash;&gt;-->
+<!--	<div style="height: 100%; width: 100%" #logoSVG [ngStyle]="{fill: TinyColor( colors[1] ).toRgbString()}">-->
+<!--&lt;!&ndash;		<pre>{{ TinyColor( colors[0] ).toRgbString() }}</pre>&ndash;&gt;-->
+<!--&lt;!&ndash;		<img src="./assets/img/tastybytes-inverse.png" width="100%">&ndash;&gt;-->
+<!--	-->
+<!--	-->
+<!--	</div>-->
+<!--</div>-->
+

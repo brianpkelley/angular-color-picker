@@ -7,15 +7,4 @@ import {ColorComponent} from '../color/color.component';
 	styleUrls: ['./hue-spectrum.component.scss']
 })
 export class HueSpectrumComponent extends ColorComponent {
-
-
-	ngOnInit() {
-	}
-
-	onValueChange( val ) {
-		this.value = val;
-		this.valueChange.emit( val );
-	}
-
-
 }

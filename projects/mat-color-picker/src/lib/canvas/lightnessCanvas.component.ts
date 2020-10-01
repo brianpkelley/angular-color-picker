@@ -1,3 +1,7 @@
+/**
+ * While the ComponentSliderCanvasComponent supports this same functionality,
+ */
+
 import {Component, DoCheck, ViewEncapsulation} from '@angular/core';
 import { hsv2hsl } from '../util';
 import {SliderCanvas} from './sliderCanvas.component';
@@ -10,6 +14,12 @@ import {IColorHSV} from '../mat-color-picker.types';
 })
 export class LightnessCanvasComponent extends SliderCanvas implements DoCheck {
 	public type = 'lightness';
+
+	constructor() {
+		//super();
+
+		console.warn( "DEPRECATED: tb-lightness-canvas has been deprecated" );
+	}
 
 	ngDoCheck() {
 		super.ngDoCheck();
@@ -52,7 +62,7 @@ export class LightnessCanvasComponent extends SliderCanvas implements DoCheck {
 	}
 
 	getColorByPoint( x, y ) {
-		var v = 1 - this.getPercentage( x, y ); // this.height - y ) / this.height;
+		var v = 1 - this.getPercentage( x, y );
 
 		this._value = Object.assign( { ...this.value }, {v} ) as IColorHSV;
 

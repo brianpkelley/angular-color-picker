@@ -6,7 +6,7 @@ import {EOrientation, IColor, IColorHSV} from '../../mat-color-picker.types';
 	templateUrl: './color.component.html',
 	styleUrls: ['./color.component.css']
 })
-export class ColorComponent implements OnChanges {
+export class ColorComponent implements OnInit, OnChanges {
 
 
 	@Input() value: IColor;
@@ -14,21 +14,25 @@ export class ColorComponent implements OnChanges {
 
 	@Input() showAlpha: boolean = true;
 	@Input() sliderOrientation: EOrientation = EOrientation.VERTICAL;
+	@Input() alphaOrientation: EOrientation;
+	@Input() markerClass: string = 'circle-filled';
 
-	@HostBinding('style.flexDirection') public flexDirection = 'row'
+	EOrientation = EOrientation;
+
+	//@HostBinding('style.flexDirection') public flexDirection = 'row'
 
 	constructor() {
 	}
 
-	ngOnChanges( changes ): void {
-		if ( changes.sliderOrientation ) {
-			if (changes.sliderOrientation.currentValue === EOrientation.HORIZONTAL) {
-				this.flexDirection = 'column';
-			} else {
-				this.flexDirection = 'row';
-			}
-		}
+	ngOnInit(): void {
+		this.alphaOrientation = this.alphaOrientation || this.sliderOrientation;
 	}
 
+	ngOnChanges( changes ): void {}
+
+	onValueChange(val) {
+		this.value = val;
+		this.valueChange.emit(val);
+	}
 
 }

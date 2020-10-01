@@ -5,7 +5,7 @@ import {color, object} from '@storybook/addon-knobs';
 import {MatColorPickerModule} from '../mat-color-picker.module';
 import {hsv2hsl} from '../util';
 import {IColorHSV} from '../mat-color-picker.types';
-import {HueCanvasComponent} from './hueCanvas.component';
+import {HueSlider} from '../canvases/sliders/hueSlider';
 import {AlphaCanvasComponent} from './alphaCanvas.component';
 import {LightnessCanvasComponent} from './lightnessCanvas.component';
 import {SpectrumCanvasComponent} from './spectrumCanvas.component';
@@ -27,14 +27,14 @@ storiesOf('Canvas|Hue Slider', module)
 		})
 	)
 	.add('Default', () => ({
-		component: HueCanvasComponent,
+		component: HueSlider,
 		props: {
 			value: color('color', 'rgb(203, 247, 26)' ),
 			valueChange: action('Color Change')
 		}
 	}))
 	.add('Custom Width', () => ({
-		component: HueCanvasComponent,
+		component: HueSlider,
 		props: {
 			value: color('color', 'rgb(203, 247, 26)' ),
 			valueChange: action('Color Change'),

@@ -1,3 +1,25 @@
+
+// Canvas
+$tb-canvas-border-width: 3px;
+$tb-canvas-border-color: #fff;
+$tb-canvas-border-radius: 6px;
+$tb-canvas-margin: 4px;
+$tb-canvas-shadow: 0 0 2px rgba( 0, 0, 0, .5 );
+
+// Sliders
+$tb-slider-border-radius: 9px;
+
+// Circle Marker
+$tb-circle-marker-height: 20px;
+$tb-circle-marker-width: $tb-circle-marker-height;
+$tb-circle-marker-height-active: $tb-circle-marker-height * 1.1;
+$tb-circle-marker-width-active: $tb-circle-marker-height-active;
+
+$tb-circle-marker-border-width: $tb-canvas-border-width;
+$tb-circle-marker-border-color: $tb-canvas-border-color;
+$tb-circle-marker-border-radius: 100%;
+$tb-circle-marker-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.5 ), 0 0 6px 0 rgba( 0, 0, 0, 0.25 );
+
 .checkered, .has-alpha {
 	background: linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), white;
 	background-repeat: repeat, repeat;
@@ -16,42 +38,26 @@
 	height: 14px;
 	width: 14px;
 	line-height: 9px;
-	border: 2px solid rgba( 0, 0, 0, 0.75 );
 
-	//box-shadow: 0 0 0 1px rgba( 0, 0, 0, 0.5 );
 	position: absolute;
-	//margin-left: 1px;
-	border-radius: 100%;
 	top: 0;
 	left: 0;
-
-	/*&:after {
-		content: '';
-		border: 2px double #fff;
-		border-radius: 100%;
-
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		bottom: 0px;
-		right: 0px;
-	}*/
-
 	box-sizing: border-box;
 
 	&.circle-filled {
 		border-color: #fff !important;
+		border-radius: $tb-circle-marker-border-radius;
 		display: block;
-		height: 18px;
-		width: 18px;
+		width: $tb-circle-marker-width;
+		height: $tb-circle-marker-height;
 		border-width: 0px;
 		transition: border-width .1s linear, height .1s linear, width .1s linear;
 
 		&:after {
-			width: 18px;
-			height: 18px;
-			border: 2px solid #fff;
-			border-radius: 100%;
+			width: $tb-circle-marker-width;
+			height: $tb-circle-marker-height;
+			border: $tb-circle-marker-border-width solid $tb-circle-marker-border-color;
+			border-radius: $tb-circle-marker-border-radius;
 			content: '';
 			background-color: var( --color );
 			position: absolute;
@@ -59,25 +65,16 @@
 			left: 0px;
 			box-sizing: border-box;
 			transition: top .1s linear, left .1s linear, width .1s linear,height .1s linear;
-			box-shadow: 0 0 4px 0 rgba( 0, 0, 0, 0.5 ), 0 0 6px 0 rgba( 0, 0, 0, 0.25 );
+			box-shadow: $tb-circle-marker-shadow;
 
 		}
 
 		&.active {
-			//height: 22px;
-			//width: 22px;
-			//margin-top: -2px;
-			//margin-left: -2px;
-
-			//border-width: 11px;
-
 			&:after {
-				width: 22px;
-				height: 22px;
-				top: -2px;
-				left: -2px;
-				//transition: border-width .1s linear, height .1s linear, width .1s linear;
-
+				width: $tb-circle-marker-width-active;
+				height: $tb-circle-marker-height-active;
+				top: ( $tb-circle-marker-height - $tb-circle-marker-height-active ) / 2;
+				left: ( $tb-circle-marker-width - $tb-circle-marker-width-active ) / 2;
 			}
 		}
 	}
@@ -86,11 +83,11 @@
 .tb-canvas-container {
 	position: relative;
 	display: inline-block;
-	margin: 4px;
-	border: 2px solid #fff; //rgba( 0, 0, 0, 0.25 );
+	margin: $tb-canvas-margin;
+	border: $tb-canvas-border-width solid $tb-canvas-border-color; //rgba( 0, 0, 0, 0.25 );
 	//overflow: hidden;
-	box-shadow: 0 0 2px rgba( 0, 0, 0, .5 ); //, 0 0 4px 0 rgba( 0, 0, 0, 0.1 );
-	border-radius: 6px;
+	box-shadow: $tb-canvas-shadow; //, 0 0 4px 0 rgba( 0, 0, 0, 0.1 );
+	border-radius: $tb-canvas-border-radius;
 	//box-sizing: border-box;
 
 	canvas,
@@ -105,11 +102,13 @@
 	}
 	&.tb-color-slider {
 		overflow: visible;
-		border-radius: 7px;
+		border-radius: $tb-slider-border-radius;
+		max-width: 255px;
+		max-height: 255px;
 
 
 		.tb-canvas {
-			border-radius: 6px;
+			border-radius: $tb-canvas-border-radius;
 		}
 
 		.tb-marker {
@@ -215,4 +214,44 @@
 
 }
 
+.tb-invert {
+	transform: rotate(180deg);
+}
 
+
+.tb-slider {
+	display: flex;
+	flex-direction: row;
+
+
+	.tb-slider-label {
+		text-transform: uppercase;
+		margin: 4px 12px 4px 8px;
+		line-height: 18px;
+	}
+
+	mat-form-field {
+		margin: 4px 12px 4px 8px;
+		max-width: 50px;
+		min-width: 50px;
+		text-align: center;
+
+		.mat-form-field-wrapper {
+			padding: 0;
+
+			.mat-form-field-label-wrapper {
+				display: none;
+			}
+
+			.mat-form-field-infix {
+				border-top: 0;
+				padding: 0;
+				margin: 0;
+			}
+
+			.mat-form-field-underline {
+				bottom: 0;
+			}
+		}
+	}
+}

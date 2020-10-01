@@ -1,3 +1,7 @@
-<tb-spectrum-canvas [value]="value" (valueChange)="onValueChange( $event )"></tb-spectrum-canvas>
-<tb-hue-canvas [value]="value" (valueChange)="onValueChange( $event )" [orientation]="sliderOrientation"></tb-hue-canvas>
-<tb-alpha-canvas [value]="value" (valueChange)="onValueChange( $event )" [orientation]="sliderOrientation" *ngIf="showAlpha"></tb-alpha-canvas>
+<div style="display: flex; flex-direction: row;">
+	<tb-spectrum-canvas [value]="value" (valueChange)="onValueChange( $event )"></tb-spectrum-canvas>
+	<tb-component-slider component="h" colorModel="hue" [value]="value" (valueChange)="onValueChange( $event )" [orientation]="sliderOrientation" *ngIf="sliderOrientation === EOrientation.VERTICAL" ></tb-component-slider>
+	<tb-component-slider component="a" colorModel="alpha" [value]="value" (valueChange)="onValueChange( $event )" [orientation]="alphaOrientation" *ngIf="showAlpha && alphaOrientation === EOrientation.VERTICAL" ></tb-component-slider>
+</div>
+<tb-component-slider component="h" colorModel="hue" [value]="value" (valueChange)="onValueChange( $event )" [orientation]="sliderOrientation" *ngIf="sliderOrientation === EOrientation.HORIZONTAL" ></tb-component-slider>
+<tb-component-slider component="a" colorModel="alpha" [value]="value" (valueChange)="onValueChange( $event )" [orientation]="alphaOrientation" *ngIf="showAlpha && alphaOrientation === EOrientation.HORIZONTAL" ></tb-component-slider>

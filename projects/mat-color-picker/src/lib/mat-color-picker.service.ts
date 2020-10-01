@@ -1,9 +1,22 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Canvas, TBMCPCanvas} from './mat-color-picker.types';
+
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class MatColorPickerService {
 
-  constructor() { }
+	private registry: { [key:string]: Canvas<TBMCPCanvas>; } = {};
+
+	constructor() {
+	}
+
+	registerCanvas(name: string, canvas: Canvas<TBMCPCanvas>) {
+		this.registry[name] = canvas;
+	}
+	getCanvas( name: string, component: string ) {
+		return new this.registry[name]( component, this );
+	}
 }
+

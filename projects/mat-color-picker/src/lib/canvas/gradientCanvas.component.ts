@@ -217,7 +217,7 @@ export class GradientCanvas implements OnInit, AfterViewInit, DoCheck {
 
 	}
 
-	getColorByPoint(x, y?) {
+	getColorByPoint(x: number, y: number): IColorHSV|void {
 		// Stub
 	};
 

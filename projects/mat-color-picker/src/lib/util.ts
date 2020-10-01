@@ -16,42 +16,53 @@ export function brightness(c: IColor): Number {
 	);
 }
 
-export function hsv2hsl({h, s, v}: IColorHSV): IColorHSL {
-	// both hsv and hsl values are in [0, 1]
-	let l = (2 - s) * v / 2;
+//export function hsv2hsl({h, s, v, a}: IColorHSV): IColorHSL {
+//	// both hsv and hsl values are in [0, 1]
+//	let l = (2 - s) * v / 2;
+//	let _s = s;
+//	if (l != 0) {
+//		if (l == 1 || l == 0) {
+//			//s = 0;
+//		} else if (l < 0.5) {
+//			_s = s * v / (l * 2);
+//		} else {
+//			_s = s * v / (2 - l * 2);
+//		}
+//	}
+//
+//	return {
+//		h,
+//		s: _s,
+//		l,
+//		a: a !== undefined ? a : 1
+//
+//	};
+//}
+//
+//export function hsl2hsv({h, s, l, a}: IColorHSL): IColorHSV {
+//	let _h = h,
+//		_s,
+//		_v;
+//
+//	l *= 2;
+//	s *= (l <= 1) ? l : 2 - l;
+//	_v = (l + s) / 2;
+//	_s = (2 * s) / (l + s);
+//
+//	return {
+//		h: _h,
+//		s: isNaN( _s ) ? 0 : _s,
+//		v: isNaN( _v ) ? 0 : _v,
+//		a: a !== undefined ? a : 1
+//
+//	};
+//}
 
-	if (l != 0) {
-		if (l == 1) {
-			s = 0;
-		} else if (l < 0.5) {
-			s = s * v / (l * 2);
-		} else {
-			s = s * v / (2 - l * 2);
-		}
-	}
 
-	return {h, s, l};
-}
+export const hsv2hsl = ({h, s, v, a}: IColorHSV,l=v-v*s/2,m=Math.min(l,1-l)): IColorHSL => ({h,s: m?(v-l)/m:0,l,a: a !== undefined ? a : 1});
+export const hsl2hsv = ({h, s, l, a}: IColorHSL,v=s*Math.min(l,1-l)+l): IColorHSV => ({h, s: v?2-2*l/v:s, v,a: a !== undefined ? a : 1});
 
-function hsl2hsv({h, s, l}: IColorHSL): IColorHSV {
-	let _h = h,
-		_s,
-		_v;
-
-	l *= 2;
-	s *= (l <= 1) ? l : 2 - l;
-	_v = (l + s) / 2;
-	_s = (2 * s) / (l + s);
-
-	return {
-		h: _h,
-		s: _s,
-		v: _v
-	};
-}
-
-
-export function hsv2rgb({h, s, v}: IColorHSV): IColorRGB {
+export function hsv2rgb({h, s, v, a}: IColorHSV): IColorRGB {
 	let r, g, b, i, f, p, q, t;
 	if(s == 0) {
 		// Achromatic (grey)
@@ -112,7 +123,9 @@ export function hsv2rgb({h, s, v}: IColorHSV): IColorRGB {
 	return {
 		r: Math.round(r * 255),
 		g: Math.round(g * 255),
-		b: Math.round(b * 255)
+		b: Math.round(b * 255),
+		a: a !== undefined ? a : 1
+
 	};
 }
 

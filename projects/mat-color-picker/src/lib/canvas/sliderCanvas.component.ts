@@ -1,6 +1,7 @@
 import { Component, DoCheck, HostBinding, Input, OnChanges, OnInit, ViewEncapsulation, Directive } from '@angular/core';
 import {GradientCanvas} from './gradientCanvas.component';
 import {EOrientation} from '../mat-color-picker.types';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 //@Component({
@@ -19,6 +20,8 @@ export class SliderCanvas extends GradientCanvas implements OnInit, OnChanges {
 	protected orientation: EOrientation = EOrientation.VERTICAL
 	@Input()
 	public markerClass = 'circle-filled';
+	@Input( 'invert' )
+	protected invert: boolean;
 
 	@HostBinding('class.tb-color-slider') slider = true;
 	@HostBinding('class.tb-horizontal') horizontal = false;
@@ -67,7 +70,7 @@ export class SliderCanvas extends GradientCanvas implements OnInit, OnChanges {
 
 	getPercentage( x, y ) {
 		let coord = this.isVertical() ? y : x;
-		return (coord / this.getSliderDimension());
+		return Math.min(1, Math.max(0, (coord / this.getSliderDimension())));
 	}
 
 	isVertical() {
