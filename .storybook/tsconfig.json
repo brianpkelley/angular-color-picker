@@ -1,5 +1,5 @@
 {
-	"extends": "../projects/mat-color-picker/tsconfig.lib.json",
+	"extends": "../projects/angular-color-picker/tsconfig.lib.json",
 	"compilerOptions": {
 		"types": [
 			"node"

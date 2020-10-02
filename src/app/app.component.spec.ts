@@ -19,13 +19,13 @@ describe('AppComponent', () => {
   it(`should have as title 'mat-color-picker-app'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('mat-color-picker-app');
+    expect(app.title).toEqual('angular-color-picker-app');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to mat-color-picker-app!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to angular-color-picker-app!');
   });
 });

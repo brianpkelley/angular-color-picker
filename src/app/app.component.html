@@ -4,16 +4,16 @@
 		<div style="height: 100%; width: 100%" #logoSVG [ngStyle]="{fill: TinyColor( colors[1] ).toRgbString()}">
 		</div>
 	</div>
-	
+
 	<tb-mat-color-picker></tb-mat-color-picker>
-	
+
 	<input type="color" [ngModel]="TinyColor( colors[1] ).toHexString()" (ngModelChange)="colors[1] = $event"/>
 	<input type="text" [ngModel]="TinyColor( colors[0] ).toRgbString()" (ngModelChange)="colors[0] = $event"/>
-	
+
 	<mat-tab-group >
 		<mat-tab label="Hue and Spectrum">
 			<ng-template matTabContent>
-			
+
 			<div style="padding: 30px;">
 				<tb-hue-spectrum [(value)]="colors[0]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL" [alphaOrientation]="EOrientation.HORIZONTAL"></tb-hue-spectrum>
 			</div>
@@ -21,7 +21,7 @@
 		</mat-tab>
 		<mat-tab label="Hue and Spectrum">
 			<ng-template matTabContent>
-				
+
 				<div style="padding: 30px;">
 					<tb-hue-lightness [(value)]="colors[0]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL" [alphaOrientation]="EOrientation.HORIZONTAL"></tb-hue-lightness>
 				</div>
@@ -29,7 +29,7 @@
 		</mat-tab>
 		<mat-tab label="Color Wheel and Lightness">
 			<ng-template matTabContent>
-			
+
 			<div style="padding: 30px;">
 				<tb-wheel-lightness [(value)]="colors[1]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL" [alphaOrientation]="EOrientation.HORIZONTAL"></tb-wheel-lightness>
 			</div>
@@ -42,7 +42,7 @@
 				</div>
 			</ng-template>
 		</mat-tab>
-		
+
 		<mat-tab label="HSL Sliders">
 			<ng-template matTabContent>
 				<div style="padding: 30px; display: flex; flex-direction: column;">
@@ -50,7 +50,7 @@
 				</div>
 			</ng-template>
 		</mat-tab>
-		
+
 		<mat-tab label="HSV Sliders">
 			<ng-template matTabContent>
 				<div style="padding: 30px; display: flex; flex-direction: column;">
@@ -58,9 +58,9 @@
 				</div>
 			</ng-template>
 		</mat-tab>
-		
+
 	</mat-tab-group>
-	
+
 	<span style="text-align: left;">
 	<pre>{{ colors[ 1 ] | json}}</pre>
 	<pre>{{ TinyColor( colors[ 1 ] ).toHsl() | json}}</pre>

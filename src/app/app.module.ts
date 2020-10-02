@@ -2,10 +2,11 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {MatColorPickerModule} from '../../projects/mat-color-picker/src/lib/mat-color-picker.module';
+//import {AngularColorPickerModule} from '../../projects/angular-color-picker/src/lib/angular-color-picker.module';
 import {FormsModule} from '@angular/forms';
 import {MatTabsModule} from '@angular/material/tabs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AngularColorPickerModule} from '../../projects/angular-color-picker/src/lib/angular-color-picker.module';
 
 @NgModule({
 	declarations: [
@@ -15,7 +16,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 		BrowserModule,
 		BrowserAnimationsModule,
 		FormsModule,
-		MatColorPickerModule,
+		AngularColorPickerModule,
 		MatTabsModule
 	],
 	providers: [],
