@@ -6,11 +6,15 @@
 			"node"
 		]
 	},
-  "files": [
-    "main.ts",
-    "polyfills.ts"
-  ],
-  "include": [
-    "src/**/*.d.ts"
-  ]
+	"files": [
+		"main.ts",
+		"polyfills.ts"
+	],
+	"include": [
+		"src/**/*.d.ts"
+	],
+	"exclude": [
+		"projects/angular-color-picker/**",
+		"dist/**"
+	]
 }

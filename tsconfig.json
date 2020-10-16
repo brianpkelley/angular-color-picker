@@ -18,16 +18,20 @@
 			"dom"
 		],
 		"paths": {
-			"mat-color-picker": [
-				"dist/mat-color-picker"
+			"angular-color-picker": [
+				"dist/angular-color-picker"
 			],
-			"mat-color-picker/*": [
-				"dist/mat-color-picker/*"
+			"angular-color-picker/*": [
+				"dist/angular-color-picker/*"
 			]
 		},
+
 		"types": [
 			"node"
 		],
 		"jsx": "preserve"
+	},
+	"angularCompilerOptions": {
+		"enableIvy": false
 	}
 }

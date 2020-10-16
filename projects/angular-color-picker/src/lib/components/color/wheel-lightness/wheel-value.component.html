@@ -1,0 +1,7 @@
+<div style="display: flex; flex-direction: row;">
+	<tb-wheel-canvas [value]="value" (valueChange)="onValueChange($event)" markerClass="circle-filled"></tb-wheel-canvas>
+	<tb-saturation-slider  [value]="value" (valueChange)="onValueChange( $event )" [orientation]="sliderOrientation" *ngIf="sliderOrientation === EOrientation.VERTICAL" ></tb-saturation-slider>
+	<tb-alpha-slider [value]="value" (valueChange)="onValueChange( $event )" [orientation]="alphaOrientation" *ngIf="showAlpha && alphaOrientation === EOrientation.VERTICAL" ></tb-alpha-slider>
+</div>
+<tb-saturation-slider [value]="value" (valueChange)="onValueChange( $event )" [orientation]="sliderOrientation" *ngIf="sliderOrientation === EOrientation.HORIZONTAL" ></tb-saturation-slider>
+<tb-alpha-slider [value]="value" (valueChange)="onValueChange( $event )" [orientation]="alphaOrientation" *ngIf="showAlpha && alphaOrientation === EOrientation.HORIZONTAL" ></tb-alpha-slider>

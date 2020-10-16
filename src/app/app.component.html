@@ -9,12 +9,14 @@
 
 	<input type="color" [ngModel]="TinyColor( colors[1] ).toHexString()" (ngModelChange)="colors[1] = $event"/>
 	<input type="text" [ngModel]="TinyColor( colors[0] ).toRgbString()" (ngModelChange)="colors[0] = $event"/>
+	<input type="text" [ngModel]="TinyColor( colors[0] ).toHslString()" (ngModelChange)="colors[0] = $event"/>
 
 	<mat-tab-group >
 		<mat-tab label="Hue and Spectrum">
 			<ng-template matTabContent>
 
 			<div style="padding: 30px;">
+<!--				<tb-spectrum-canvas [(value)]="colors[0]" ></tb-spectrum-canvas>-->
 				<tb-hue-spectrum [(value)]="colors[0]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL" [alphaOrientation]="EOrientation.HORIZONTAL"></tb-hue-spectrum>
 			</div>
 			</ng-template>
@@ -30,15 +32,15 @@
 		<mat-tab label="Color Wheel and Lightness">
 			<ng-template matTabContent>
 
-			<div style="padding: 30px;">
-				<tb-wheel-lightness [(value)]="colors[1]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL" [alphaOrientation]="EOrientation.HORIZONTAL"></tb-wheel-lightness>
-			</div>
+				<div style="padding: 30px;">
+					<tb-wheel-value [(value)]="colors[1]" [showAlpha]="true" [sliderOrientation]="EOrientation.VERTICAL" [alphaOrientation]="EOrientation.HORIZONTAL"></tb-wheel-value>
+				</div>
 			</ng-template>
 		</mat-tab>
 		<mat-tab label="RGB Sliders">
 			<ng-template matTabContent>
 				<div style="padding: 30px; display: flex; flex-direction: column;">
-					<tb-sliders [(value)]="colors[1]" [sliderOrientation]="EOrientation.HORIZONTAL" components="rgb"></tb-sliders>
+<!--					<tb-sliders [(value)]="colors[1]" [sliderOrientation]="EOrientation.HORIZONTAL" components="rgb"></tb-sliders>-->
 				</div>
 			</ng-template>
 		</mat-tab>
@@ -46,7 +48,7 @@
 		<mat-tab label="HSL Sliders">
 			<ng-template matTabContent>
 				<div style="padding: 30px; display: flex; flex-direction: column;">
-					<tb-sliders [(value)]="colors[1]" [sliderOrientation]="EOrientation.HORIZONTAL" components="hsl"></tb-sliders>
+<!--					<tb-sliders [(value)]="colors[1]" [sliderOrientation]="EOrientation.HORIZONTAL" components="hsl"></tb-sliders>-->
 				</div>
 			</ng-template>
 		</mat-tab>
@@ -54,7 +56,7 @@
 		<mat-tab label="HSV Sliders">
 			<ng-template matTabContent>
 				<div style="padding: 30px; display: flex; flex-direction: column;">
-					<tb-sliders [(value)]="colors[1]" [sliderOrientation]="EOrientation.HORIZONTAL" components="hsv"></tb-sliders>
+<!--					<tb-sliders [(value)]="colors[1]" [sliderOrientation]="EOrientation.HORIZONTAL" components="hsv"></tb-sliders>-->
 				</div>
 			</ng-template>
 		</mat-tab>

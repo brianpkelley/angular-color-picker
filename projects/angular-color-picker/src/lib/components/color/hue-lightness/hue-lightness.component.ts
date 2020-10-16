@@ -1,7 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {ColorComponent} from '../color.component';
-import {ComponentSliderCanvasComponent} from '../../../canvas/sliderCanvas/componentSliderCanvas/componentSliderCanvas.component';
-import {HueLightnessCanvasComponent} from '../../../canvas/gradientCanvas/hueLightnessCanvas/hueLightnessCanvas.component';
 
 
 @Component({

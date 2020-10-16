@@ -1,29 +1,13 @@
-export type Canvas<T> = new(...args: any[]) => T;
+export type Constructor<T> = new(...args: any[]) => T;
 
 
-export interface IColor {
-	hsv?: IColorHSV | string;
-	hsl?: IColorHSL | string;
-	rgb?: IColorRGB | string;
-	hex?: IColorHEX | string;
-	cmyk?: IColorCMYK | string;
-	alpha?: number;
-	h?: number;
-	s?: number;
-	v?: number;
-	l?: number;
+export type IColor =
+	| IColorCMYK
+	| IColorHEX
+	| IColorHSL
+	| IColorHSV
+	| IColorRGB;
 
-	r?: number;
-	g?: number;
-	b?: number;
-
-	c?: number;
-	m?: number;
-	y?: number;
-	k?: number;
-
-	a?: number;
-};
 
 export interface IColorHSV {
 	h: number;
@@ -61,6 +45,13 @@ export interface IColorCMYK {
 	a?: number;
 }
 
+export interface IColorChanges {
+	h?: number;
+	s?: number;
+	v?: number;
+	a?: number;
+}
+
 export interface ICoord {
 	x: number;
 	y: number;
@@ -69,4 +60,21 @@ export interface ICoord {
 export enum EOrientation {
 	VERTICAL = 'vertical',
 	HORIZONTAL = 'horizontal'
+}
+
+
+export function colorIsRGB(color: IColor): color is IColorRGB {
+	return 'r' in color;
+}
+
+export function colorIsHSV(color: IColor): color is IColorHSV {
+	return 'v' in color;
+}
+
+export function colorIsHSL(color: IColor): color is IColorHSL {
+	return 'l' in color;
+}
+
+export function colorIsCMYK(color: IColor): color is IColorCMYK {
+	return 'c' in color;
 }

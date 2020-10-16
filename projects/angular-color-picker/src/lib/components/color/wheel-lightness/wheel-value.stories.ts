@@ -1,5 +1,5 @@
 import {action} from '@storybook/addon-actions';
-import {WheelLightnessComponent} from './wheel-lightness.component';
+import {WheelValueComponent} from './wheel-value.component';
 import {AngularColorPickerModule} from '../../../angular-color-picker.module';
 import {moduleMetadata, storiesOf} from '@storybook/angular';
 import {EOrientation} from '../../../angular-color-picker.types';
@@ -12,7 +12,7 @@ storiesOf( 'Panels|Wheel Lightness', module)
 		})
 	)
 	.add( 'Default', () => ({
-		component: WheelLightnessComponent,
+		component: WheelValueComponent,
 		props: {
 			value: color('color', 'rgb(203, 247, 26)' ),
 			valueChange: action( 'Color Change' ),
@@ -21,7 +21,7 @@ storiesOf( 'Panels|Wheel Lightness', module)
 		}
 	}))
 	.add( 'Without Alpha', () => ({
-		component: WheelLightnessComponent,
+		component: WheelValueComponent,
 		props: {
 			value: color('color', 'rgb(203, 247, 26)' ),
 			valueChange: action( 'Color Change' ),
@@ -30,7 +30,7 @@ storiesOf( 'Panels|Wheel Lightness', module)
 		}
 	}))
 	.add( 'Horizontal Sliders', () => ({
-		component: WheelLightnessComponent,
+		component: WheelValueComponent,
 		props: {
 			value: color('color', 'rgb(203, 247, 26)' ),
 			valueChange: action( 'Color Change' ),

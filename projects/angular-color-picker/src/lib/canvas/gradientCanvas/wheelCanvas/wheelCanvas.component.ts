@@ -1,6 +1,6 @@
 import {Component, DoCheck, HostBinding, Input, ViewEncapsulation} from '@angular/core';
 import {GradientCanvas} from '../gradientCanvas.component';
-import {ICoord} from '../../../angular-color-picker.types';
+import {IColorHSV, ICoord} from '../../../angular-color-picker.types';
 
 
 @Component({
@@ -24,15 +24,16 @@ export class WheelCanvasComponent extends GradientCanvas implements DoCheck {
 		if ( !this.ready ) {
 			return;
 		}
-		if ( this._oldValue && this._value ) {
-			if (this._value.h !== this._oldValue.h || this._value.s !== this._oldValue.s || this._value.v !== this._oldValue.v) {
+		if ( this._oldValue ) {
+			const changes = this._value.compare( this._oldValue );
+			if ( changes.h || changes.s || changes.v ) {
 				this.onColorSet();
 			}
-			if ( this.adjustBlack && this._value.v !== this._oldValue.v ) {
+			if ( this.adjustBlack && changes.v ) {
 				this.draw();
 			}
 		}
-		this._oldValue = this._value;
+		this._oldValue = this._value.toHSV();
 	}
 
 
@@ -43,7 +44,7 @@ export class WheelCanvasComponent extends GradientCanvas implements DoCheck {
 		let yc = this.height / 2;
 		let r = this.width / 2;
 
-		let v = this.adjustBlack ? 1 - this.value.v  : 1;
+		let v = this.adjustBlack ? 1 - ( this._value.color as IColorHSV ).v  : 1;
 
 		// Color Wheel
 		for (let i = 0; i < 360; i += 360/this.hueSteps ) {
@@ -101,21 +102,11 @@ export class WheelCanvasComponent extends GradientCanvas implements DoCheck {
 
 		let h = Math.atan2(yCart, xCart) * (180 / PI);
 		let s = Math.round( Math.min(1, Math.sqrt(xCart * xCart + yCart * yCart) / radius) * 1000 ) / 1000;
-		let v = this.value.v;
-		let a = this.value.a;
-
 
 		// atan2 works in -180..180 so we need to rectify the negatives
-		h = (h > 0 ? h : 360 + h);
-
-		/*if ( this.hueSteps !== 360 ) {
-			h = Math.floor(h / (360 / this.hueSteps)) * (360 / this.hueSteps);
-		}*/
-
-		this._value = {h, s, v, a};
-		//this._oldValue = {h, s, v, a};
-		this.valueChange.emit(this._value);
-
+		this._value.setHue( (h > 0 ? h : 360 + h) );
+		this._value.setSaturation( s );
+		this.valueChange.emit( this._value.toHSV() );
 	}
 
 	/**
@@ -145,8 +136,6 @@ export class WheelCanvasComponent extends GradientCanvas implements DoCheck {
 			yCart = radius * Math.sin(theta);
 		}
 
-
-
 		// Center in Canvas
 		let xAdjusted = xCart + radius;
 		let yAdjusted = yCart + radius;
@@ -157,22 +146,13 @@ export class WheelCanvasComponent extends GradientCanvas implements DoCheck {
 	onColorSet() {
 		super.onColorSet();
 
-		let hsv = this.value;
+		let hsv = this._value.toHSV();
 		let hue = hsv.h;
 		let PI = Math.PI;
 		let radius = (this.height / 2) * hsv.s;
 
 		// Calculate the angle of the cartesian plot
 		let theta = hue * (PI / 180);
-
-	/*	if ( this.hueSteps !== 360 ) {
-			let hueStep = 360 / this.hueSteps;
-			theta = (theta > 0 ? theta : 360 + theta);
-			theta = hueStep / 2 + (Math.floor(theta / hueStep) * hueStep);
-			theta = theta / (180 / Math.PI);
-			//console.log("Adjust x,y for Wheel", x, y, theta, r);
-		}*/
-
 
 		// Get the new x,y plot inside the circle using the adjust radius from above
 		let xCoord = radius * Math.cos(theta);
@@ -181,14 +161,7 @@ export class WheelCanvasComponent extends GradientCanvas implements DoCheck {
 		xCoord = xCoord + this.width / 2;
 		yCoord = yCoord + this.height / 2;
 
-		//this.adjustXY
-
 		this.setMarkerCenter(xCoord, yCoord);
 		this.setMarkerColor();
 	}
-
-	//setMarkerColor( ) {
-	//	this.marker.nativeElement.style.borderColor = TinyColor.mostReadable( this.value, ["#fff", "#000"] );
-	//}
-
 }

@@ -1,6 +1,6 @@
-import {Component, DoCheck, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, DoCheck, OnInit, ViewEncapsulation} from '@angular/core';
 import {GradientCanvas} from '../gradientCanvas.component';
-import {hsv2hsl} from '../../../util';
+import {TBColorHelpers} from '../../../services/colorHelpers';
 
 
 @Component({
@@ -13,17 +13,19 @@ export class HueLightnessCanvasComponent extends GradientCanvas implements OnIni
 
 	ngDoCheck() {
 		super.ngDoCheck();
-		if ( !this.ready ) {
+		if (!this.ready) {
 			return;
 		}
-		if ( this._oldValue && this._value ) {
-			if ( !this._oldValue || this._value.h !== this._oldValue.h || this._value.s !== this._oldValue.s ) {
+
+		if (this._oldValue ) {
+			const changes = this._value.compare(this._oldValue);
+			if (changes.s || changes.h) {
 				this.onColorSet();
 			}
-		} else if ( !this._oldValue && this._value ) {
+		} else if (!this._oldValue && this._value) {
 			this.onColorSet();
 		}
-		this._oldValue = this._value;
+		this._oldValue = this._value.toHSV();
 	}
 
 	draw() {
@@ -31,7 +33,7 @@ export class HueLightnessCanvasComponent extends GradientCanvas implements OnIni
 		// Create gradient
 
 		let hueGrd = this.context.createLinearGradient(0, 90, this.width, 90);
-		let lightnessGrd = this.context.createLinearGradient(0, 0, 0, this.height );
+		let lightnessGrd = this.context.createLinearGradient(0, 0, 0, this.height);
 
 		// Add colors
 		hueGrd.addColorStop(0, 'rgba(255, 0, 0, 1.000)');
@@ -43,8 +45,8 @@ export class HueLightnessCanvasComponent extends GradientCanvas implements OnIni
 		hueGrd.addColorStop(1, 'rgba(255, 0, 0, 1.000)');
 
 		// Add white
-		lightnessGrd.addColorStop( 0, 'rgba( 255, 255, 255, 0 )' );
-		lightnessGrd.addColorStop( 1, 'rgba( 255, 255, 255, 1 )' );
+		lightnessGrd.addColorStop(0, 'rgba( 255, 255, 255, 0 )');
+		lightnessGrd.addColorStop(1, 'rgba( 255, 255, 255, 1 )');
 
 		// Fill with gradient
 		this.context.fillStyle = hueGrd;
@@ -55,49 +57,41 @@ export class HueLightnessCanvasComponent extends GradientCanvas implements OnIni
 	}
 
 	getColorByPoint(x, y) {
-		let currentHSV = this.value;
-		let h = 360 * this.getPercentage( x, y, 'x' );
-		let s = this.getPercentage( x, y, 'y' );
-		let v = currentHSV.v;
-		let a = currentHSV.a;
-
-		this._value = {
-			h: h,
-			s: s,
-			v: v,
-			a: a
-		};
-
-		this.valueChange.emit( this._value );
+		//let currentHSV = this._value.toHSV();
+		this._value.setHue(360 * this.getPercentage(x, y, 'x'));
+		this._value.setSaturation(this.getPercentage(x, y, 'y'));
+		this.valueChange.emit(this._value.toHSV());
 	}
 
 	onColorSet() {
+		if ( !this.trackingMove ) {
+			let hue = this._value.toHSV().h;
+			let pos = this.width * (hue / 360);
 
-		let hue = this.value.h;
-		let pos = this.width * (hue / 360);
-
-		this.setMarkerCenter( pos );
+			this.setMarkerCenter(pos);
+		}
 		this.setMarkerColor();
 	}
 
 	setMarkerColor() {
 		super.setMarkerColor();
-		let hsl = hsv2hsl(  { h: this._value.h, s: this._value.s, v: 1 } );
-		this.marker.nativeElement.style.setProperty( '--color','hsl(' + hsl.h + ',' + hsl.s * 100 + '%,' + hsl.l *100 + '% )' );
+
+		let hsl = TBColorHelpers.hsv2hsl({...this._value.toHSV(), v: 1});
+		this.marker.nativeElement.style.setProperty('--color', 'hsl(' + hsl.h + ',' + hsl.s * 100 + '%,' + hsl.l * 100 + '% )');
 
 	}
 
-	getPercentage( x, y, key = 'x' ) {
+	getPercentage(x, y, key = 'x') {
 		let coord;
-		let dim
-		if ( key == 'x' ) {
+		let dim;
+		if (key == 'x') {
 			coord = x;
 			dim = this.width;
-			return Math.min( 1, Math.max( 0, (coord / dim) ) );
+			return Math.min(1, Math.max(0, (coord / dim)));
 		} else {
 			coord = y;
 			dim = this.height;
-			return 1 - Math.min( 1, Math.max( 0, (coord / dim) ) );
+			return 1 - Math.min(1, Math.max(0, (coord / dim)));
 		}
 	}
 }

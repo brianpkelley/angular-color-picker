@@ -1,13 +1,14 @@
-import { AfterViewInit, DoCheck, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, ViewChild, Directive } from '@angular/core';
+import {AfterViewInit, DoCheck, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {IColor, IColorHSV, ICoord} from '../../angular-color-picker.types';
-import {brightness, color2rgb, hsv2rgb, rgb2hsv} from '../../util';
+import {TBColor} from '../../services/color';
+import {limit} from '../../util';
 
 //@Component({
 //	selector: 'tb-gradient-canvas',
 //	templateUrl: './canvas.template.html',
 //	encapsulation: ViewEncapsulation.None
 //})
-@Directive()
+//@Directive()
 export class GradientCanvas implements OnInit, AfterViewInit, DoCheck {
 	static CANVAS_ID = 0;
 	@Input()
@@ -37,30 +38,24 @@ export class GradientCanvas implements OnInit, AfterViewInit, DoCheck {
 	protected offset: ICoord = {x: 0, y: 0};
 	protected ready = false;
 
+	constructor() {
+		this._value = new TBColor({
+			h: 0,
+			s: 1,
+			v: 0.5,
+			a: 1
+		});
+	}
 
-
-	protected _value: IColorHSV = {
-		h: 0,
-		s: 100,
-		v: 50,
-		a: 1
-	};
+	protected _value: TBColor;
 
 	protected get value() {
-		return this._value;
+		return this._value.toHSV();
 	}
 
 	@Input('value')
 	protected set value(val: IColor) {
-		// If it's not an IColorHSV then lets make it one!
-		if (typeof val !== 'object' || (!val.h && !val.s && !val.v)) {
-			let color = rgb2hsv(color2rgb(val));
-
-			this._value = color;
-		} else {
-			this._value = val as IColorHSV;
-			this._value.a = val.a !== undefined ? val.a : 1;
-		}
+		this._value.color = val;
 	}
 
 	ngOnInit() {
@@ -80,9 +75,9 @@ export class GradientCanvas implements OnInit, AfterViewInit, DoCheck {
 		if (!this.ready) {
 			return;
 		}
-		if (!this._oldValue && this._value) {
-			this.onColorSet();
-		}
+		//if (!this._oldValue && this._value) {
+		//	this.onColorSet();
+		//}
 	}
 
 	setDimensions() {
@@ -142,6 +137,7 @@ export class GradientCanvas implements OnInit, AfterViewInit, DoCheck {
 	@HostListener('document:mouseleave', ['$event'])
 	@HostListener('document:touchend', ['$event'])
 	onMouseUp(e) {
+		console.log( 'MOUSE UP', this.trackingMove )
 		if (!this.trackingMove) {
 			return;
 		}
@@ -155,6 +151,7 @@ export class GradientCanvas implements OnInit, AfterViewInit, DoCheck {
 
 	@HostListener('document:mousemove', ['$event'])
 	@HostListener('document:touchmove', ['$event'])
+	//@limit(5)
 	onMouseMove(e) {
 		if (!this.trackingMove) {
 			return;
@@ -209,19 +206,11 @@ export class GradientCanvas implements OnInit, AfterViewInit, DoCheck {
 		return returnObj;
 	};
 
-	_onColorSet() {
-
-	}
-
 	onColorSet() {
 
 	}
 
-	getColorByPoint(x: number, y: number): IColorHSV|void {
-		// Stub
-	};
-
-	getImageData(x, y?) {
+	getColorByPoint(x: number, y: number): IColorHSV | void {
 		// Stub
 	};
 
@@ -233,8 +222,9 @@ export class GradientCanvas implements OnInit, AfterViewInit, DoCheck {
 	};
 
 	setMarkerColor() {
-		let rgb = hsv2rgb(this._value);
-		this.marker.nativeElement.style.borderColor = brightness(this._value) > 135 ? '#000' : '#fff';
+		let rgb = this._value.toRGB();
+		//console.log( this._value.toHSV(), rgb );
+		this.marker.nativeElement.style.borderColor = this._value.getBrightness() > 135 ? '#000' : '#fff';
 		this.marker.nativeElement.style.setProperty('--color', 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')');
 	}
 

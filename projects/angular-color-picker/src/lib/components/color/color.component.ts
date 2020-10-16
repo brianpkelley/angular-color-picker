@@ -1,11 +1,7 @@
-import {AfterViewInit, Component, EventEmitter, HostBinding, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {EOrientation, IColor, IColorHSV} from '../../angular-color-picker.types';
 
-@Component({
-	selector: 'lib-color',
-	templateUrl: './color.component.html',
-	styleUrls: ['./color.component.css']
-})
+
 export class ColorComponent implements OnInit, OnChanges {
 
 
@@ -28,7 +24,8 @@ export class ColorComponent implements OnInit, OnChanges {
 		this.alphaOrientation = this.alphaOrientation || this.sliderOrientation;
 	}
 
-	ngOnChanges( changes ): void {}
+	ngOnChanges(changes): void {
+	}
 
 	onValueChange(val) {
 		this.value = val;

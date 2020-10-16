@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WheelLightnessComponent } from './wheel-lightness.component';
+import { WheelValueComponent } from './wheel-value.component';
 
 describe('WheelLightnessComponent', () => {
-  let component: WheelLightnessComponent;
-  let fixture: ComponentFixture<WheelLightnessComponent>;
+  let component: WheelValueComponent;
+  let fixture: ComponentFixture<WheelValueComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WheelLightnessComponent ]
+      declarations: [ WheelValueComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WheelLightnessComponent);
+    fixture = TestBed.createComponent(WheelValueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

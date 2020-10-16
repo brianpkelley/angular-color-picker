@@ -14,20 +14,22 @@ export class SpectrumCanvasComponent extends GradientCanvas implements DoCheck {
 		if (!this.ready) {
 			return;
 		}
-		if (this._oldValue) {
-			if (this._value.h !== this._oldValue.h) {
+		//if (this._oldValue ) {
+			const changes = this._value.compare( this._oldValue );
+			if ( changes.h ) {
 				this.draw();
 				this.setMarkerColor();
 			}
-			if (this._value.s !== this._oldValue.s || this._value.v !== this._oldValue.v) {
+			if (changes.s || changes.v) {
 				this.onColorSet();
 			}
-		}
-		this._oldValue = this._value;
+		//}
+		this._oldValue = this._value.toHSV();
 	}
 
 
 	draw() {
+		const color = this._value.toHSL();
 		this.context.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
 
 
@@ -36,7 +38,7 @@ export class SpectrumCanvasComponent extends GradientCanvas implements DoCheck {
 
 
 		whiteGrd.addColorStop(0, 'rgba(255, 255, 255, 1.000)');
-		whiteGrd.addColorStop(1, 'hsl( ' + this.value.h + ', 100%, 50%)');
+		whiteGrd.addColorStop(1, 'hsl( ' + color.h + ', 100%, 50%)');
 
 		// Black Gradient
 		let blackGrd = this.context.createLinearGradient(0, 0, 0, this.canvas.nativeElement.height);
@@ -63,23 +65,20 @@ export class SpectrumCanvasComponent extends GradientCanvas implements DoCheck {
 	}
 
 	getColorByPoint(x, y) {
-		let hsv = this.value;
-		let h = hsv.h;
-		let s = x / this.height;
-		let v = (this.height - y) / this.height;
-		let a = hsv.a;
+		//console.log('GET COLOR BY POINT 1', {...this._value.color} );
+		this._value.setSaturation( x / this.height );
+		this._value.setValue( (this.height - y) / this.height );
 
-		this._value = {h, s, v, a};
-
-		this.valueChange.emit(this._value);
+		//console.log('GET COLOR BY POINT 2', {...this._value.color} );
+		//console.log( '============');
+		this.valueChange.emit( this._value.toHSV() );
 		this.setMarkerColor();
 	}
 
 
 	onColorSet() {
-		super.onColorSet();
 
-		let hsv = this.value;
+		let hsv = this._value.toHSV();
 
 		let posX = this.canvas.nativeElement.width * hsv.s;
 		let posY = this.canvas.nativeElement.height - (this.canvas.nativeElement.height * hsv.v);
@@ -89,3 +88,5 @@ export class SpectrumCanvasComponent extends GradientCanvas implements DoCheck {
 
 	}
 }
+
+
